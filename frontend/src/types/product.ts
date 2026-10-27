@@ -12,15 +12,5 @@ stock: number;
  isAvailable: boolean;
 };
 
-function calculateTotal(price: number, quantity: number): number{
-    return price * quantity;
-}
 
-function checkStock(
-    stock: number,
-    quantity:number
-): boolean {
-    return stock >= quantity;
-}
 
-console.log(checkStock(5,8));

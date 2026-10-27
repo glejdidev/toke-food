@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Container from "./ui/Container";
-
 import tokeFoodLogo from "../assets/tokefoodlogo.svg";
 import tokeFoodLogoWhite from "../assets/tokefoodlogowhite.svg";
 

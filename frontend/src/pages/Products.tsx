@@ -1,9 +1,13 @@
 import ProductCard from "../components/ProductCard";
 import { products } from "../data/products";
+import { useState } from "react";
+import type { Product } from "../types/product";
+import ProductQuickView from "../components/ProductQuickView";
 
 const Products = () => {
+const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   return (
-    <main className="bg-[#FAF8F3] py-16 md:py-24">
+    <main className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="mb-12 text-center"> 
       <span className="text-xs font-medium uppercase tracking-[0.3em] text-[#7C826F]"> 
@@ -16,11 +20,15 @@ const Products = () => {
       </div>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 ">
         {products.map((product) => (
-          <ProductCard key={product.id} product={product}  />
+          <ProductCard key={product.id} product={product} onQuickView={setSelectedProduct} />
         ))}
-
-        
       </div>
+      {selectedProduct && (
+        <ProductQuickView
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)} />
+      )
+      }
       </div>
     </main>
   );

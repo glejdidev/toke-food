@@ -9,7 +9,7 @@ export const products: Product[] = [
         price: 500,
         image: "/images/products/dhi.jpg",
         stock: 0,
-        isAvailable: true,
+        isAvailable: false,
     },
     {
         id: "p002",
