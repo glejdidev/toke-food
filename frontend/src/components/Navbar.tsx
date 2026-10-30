@@ -4,6 +4,8 @@ import { Menu, X } from "lucide-react";
 import Container from "./ui/Container";
 import tokeFoodLogo from "../assets/tokefoodlogo.svg";
 import tokeFoodLogoWhite from "../assets/tokefoodlogowhite.svg";
+import { ShoppingBag } from "lucide-react";
+import { useCart } from "../hooks/useCart";
 
 // Array
 const navigationLinks = [
@@ -15,6 +17,17 @@ const navigationLinks = [
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { cartItems } = useCart();
+
+  // .reduce() (JavaScript): Kalon nëpër elementet e array-t dhe
+  // i bashkon në një vlerë të vetme, në këtë rast shumën e sasive.
+  const totalItems = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0,
+  );
+console.log("Produktet ne shporte:", cartItems);
+console.log("Sasia totale:" , totalItems);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -66,10 +79,10 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="realtive z-50 border-b border-gray-200">
+    <header className="relative z-50 border-b border-gray-200">
       <nav aria-label="Navigimi kryesor">
         {/* Main Navbar */}
-        <Container className="realtive z-50 flex items-center justify-between py-5">
+        <Container className="relative z-50 flex items-center justify-between gap-4 py-5">
           {/* Logo */}
           <NavLink to="/" end onClick={closeMenu}>
             <img
@@ -86,18 +99,31 @@ const Navbar = () => {
                 key={link.to}
                 to={link.to}
                 end={link.to === "/"}
-                className="text-[#505c45] transition-opacity  hover:opacity-60"
+                className="text-brand transition-opacity  hover:opacity-60"
               >
                 {link.label}
               </NavLink>
             ))}
           </div>
-
+          {/* Shopping cart */}
+          <NavLink
+            to="/cart"
+            onClick={closeMenu}
+            className="relative text-brand"
+            aria-label={`Shporta me ${totalItems} produkte`}
+          >
+            <ShoppingBag size={26} />
+            {totalItems > 0 && (
+              <span className="absolute -right-3 -top-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand px-1 text-xs text-white">
+                {totalItems}
+              </span>
+            )}
+          </NavLink>
           {/* Mobile menu */}
           <button
             type="button"
             className={`relative z-50 cursor-pointer items-center justify-center transition-colors duration-300 md:hidden ${
-              isMenuOpen ? "text-white" : "text-[#505c45]"
+              isMenuOpen ? "text-white" : "text-brand"
             }`}
             aria-label={isMenuOpen ? "Mbyll menune" : "Hap menune"}
             aria-expanded={isMenuOpen}
@@ -113,7 +139,7 @@ const Navbar = () => {
           id="mobile-navigation"
           inert={!isMenuOpen}
           aria-hidden={!isMenuOpen}
-          className="fixed inset-0 z-40  bg-[#505c45] text-white transition-[clip-path] duration-700 ease-in-out motion-reduce:transition-none md:hidden"
+          className="fixed inset-0 z-40  bg-brand text-white transition-[clip-path] duration-700 ease-in-out motion-reduce:transition-none md:hidden"
           style={{
             clipPath: isMenuOpen
               ? "circle(150vmax at calc(100% - 38px) 40px)"
