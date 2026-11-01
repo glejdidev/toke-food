@@ -5,6 +5,7 @@ import Products from "./pages/Products"
 import About from "./pages/About"
 import Contact from "./pages/Contact"
 import ProductDetails from './pages/ProductDetails'
+import Cart from './pages/Cart'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path='products/:slug' element={<ProductDetails/>} />
         <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact/>} />
+        <Route path='cart' element={<Cart />} />
       </Route>
     </Routes>
     </>
