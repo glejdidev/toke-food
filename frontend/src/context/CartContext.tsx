@@ -93,6 +93,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const removeFromCart = (productId: Product["id"]) => {
     setCartItems((prevItems) =>
       // JavaScript: filter krijon një array të ri pa produktin që po fshijmë.
+      // Perfshihen te gjithe qe plotesojne kushtin ne array te ri pervec item.id != productId;
       prevItems.filter((item) => item.product.id !== productId),
     );
   };
