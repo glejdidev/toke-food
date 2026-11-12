@@ -1,15 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=League+Spartan:wght@400;500;600;700;800;900&display=swap');
 
 @import "tailwindcss";
 
 
 
 @theme {
-  --color-brand: #505c45;
+  --color-brand: #044133;
   --color-background: #faf8f3;
-  --color-brand-hover: #354330;
+  --color-brand-hover: #17634e;
+  --color-sage: #86A88A;
+  --color-soft-sage: #91AB94;
+  --color-mint: #EAF2EC;
+  --color-lime: #D9EF9D;
 
-  --font-heading: "Cormorant Garamond", serif;
+  --font-heading: "League Spartan", sans-serif;
   --font-body: "DM Sans", sans-serif;
 }
 * {
@@ -20,4 +24,11 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-background);
    margin: 0;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 24px;
 }

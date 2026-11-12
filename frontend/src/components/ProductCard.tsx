@@ -62,7 +62,9 @@ function ProductCard({
             disabled={isOutOfStock}
             className="flex w-full items-center cursor-pointer justify-center mb-2 gap-2 rounded-lg bg-brand
              px-4 py-3 text-sm font-medium text-white transition-colors duration-300 hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-50"
-             onClick={() => {addToCart(product)}}
+             onClick={() => {addToCart(product)} }
+             
+             
           >
             <ShoppingBag size={18} />
             {isOutOfStock ? "I padisponueshem" : "Shto ne shporte"}
