@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import Container from "./ui/Container";
 import tokeFoodLogo from "../assets/tokefoodlogo.svg";
 import tokeFoodLogoWhite from "../assets/tokefoodlogowhite.svg";
-import { ShoppingBag } from "lucide-react";
 import { useCart } from "../hooks/useCart";
+import Button from "./ui/Button";
+import MobileMenu from "./MobileMenu";
+import { navigationLinks } from "../data/navigation";
 
-// Array
-const navigationLinks = [
-  { to: "/", label: "Kryefaqja" },
-  { to: "/products", label: "Produktet" },
-  { to: "/about", label: "Rreth nesh" },
-  { to: "/contact", label: "Kontakt" },
-];
+
+
+
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,149 +25,76 @@ const Navbar = () => {
     (total, item) => total + item.quantity,
     0,
   );
-console.log("Produktet ne shporte:", cartItems);
-console.log("Sasia totale:" , totalItems);
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  //Stop scrolling MenuOpen
-
-  useEffect(() => {
-    if (!isMenuOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isMenuOpen]);
-
-  // Close Menu esc buttpn
-
-  useEffect(() => {
-    if (!isMenuOpen) return;
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeMenu();
-      }
-    };
-
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, [isMenuOpen]);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
-
-    const handleResize = () => {
-      if (mediaQuery.matches) {
-        closeMenu();
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleResize);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleResize);
-    };
-  }, []);
-
   return (
-    <header className="relative z-50 border-b border-gray-200">
-      <nav aria-label="Navigimi kryesor">
-        {/* Main Navbar */}
-        <Container className="relative z-50 flex items-center justify-between gap-4 py-5">
-          {/* Logo */}
-          <NavLink to="/" end onClick={closeMenu}>
-            <img
-              src={isMenuOpen ? tokeFoodLogoWhite : tokeFoodLogo}
-              alt="Toke Food"
-              className="h-10 w-auto md:h-20"
-            />
-          </NavLink>
+    <>
+      <div className="hidden md:flex bg-brand py-2  items-center justify-center gap-3 text-white text-[13px] uppercase">
+        <span>Nga toka, me kujdes.</span>
+        <span className="text-sage">
+          Porosit online • Pagesë në dorëzim në Shqipëri
+        </span>
+      </div>
+      <header className="bg-[#fbfcf9] sticky top-0 z-50 md:bg-[#FAF8F3]">
+        <MobileMenu isMenuOpen={isMenuOpen} closeMenu={closeMenu} toggleMenu={() => setIsMenuOpen((prev) =>  !prev)} totalItems={totalItems}/>
+        <nav aria-label="Navigimi kryesor">
+          {/* Main Navbar */}
+          <Container className="hidden md:flex items-center justify-between gap-4 py-6 lg:py-7">
+            {/* Logo */}
+            <NavLink to="/" end onClick={closeMenu}>
+              <img
+                src={isMenuOpen ? tokeFoodLogoWhite : tokeFoodLogo}
+                alt="Toke Food"
+                className="h-5 w-auto md:h-7"
+              />
+            </NavLink>
 
-          {/* Desktop */}
-          <div className="hidden items-center gap-6 md:flex">
-            {navigationLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.to === "/"}
-                className="text-brand transition-opacity  hover:opacity-60"
+            {/* Desktop */}
+            <div className="hidden items-center gap-8 md:flex">
+              {navigationLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.to === "/"}
+                  className={({ isActive }) =>
+                    `text-[13px] font-bold transition-colors hover:text-sage ${
+                      isActive ? "text-sage" : "text-brand"
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </div>
+
+            {/* Shopping cart */}
+            <div className="hidden md:flex items-center justify-between gap-4 font-extrabold">
+              <Button
+                variant="text"
+                to="/products"
+                className="border-b-0 text-[15px] "
               >
-                {link.label}
-              </NavLink>
-            ))}
-          </div>
-          {/* Shopping cart */}
-          <NavLink
-            to="/cart"
-            onClick={closeMenu}
-            className="relative text-brand"
-            aria-label={`Shporta me ${totalItems} produkte`}
-          >
-            <ShoppingBag size={26} />
-            {totalItems > 0 && (
-              <span className="absolute -right-3 -top-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand px-1 text-xs text-white">
-                {totalItems}
-              </span>
-            )}
-          </NavLink>
-          {/* Mobile menu */}
-          <button
-            type="button"
-            className={`relative z-50 cursor-pointer items-center justify-center transition-colors duration-300 md:hidden ${
-              isMenuOpen ? "text-white" : "text-brand"
-            }`}
-            aria-label={isMenuOpen ? "Mbyll menune" : "Hap menune"}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setIsMenuOpen((prev) => !prev)}
-          >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </Container>
-
-        {/* Fullscreen Reveal Menu */}
-        <div
-          id="mobile-navigation"
-          inert={!isMenuOpen}
-          aria-hidden={!isMenuOpen}
-          className="fixed inset-0 z-40  bg-brand text-white transition-[clip-path] duration-700 ease-in-out motion-reduce:transition-none md:hidden"
-          style={{
-            clipPath: isMenuOpen
-              ? "circle(150vmax at calc(100% - 38px) 40px)"
-              : "circle(0px at calc(100% - 38px) 40px)",
-          }}
-        >
-          <Container className="flex h-full flex-col justify-center gap-8">
-            {navigationLinks.map((link, index) => (
+                Bli tani
+              </Button>
               <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.to === "/"}
+                to="/cart"
                 onClick={closeMenu}
-                className={`w-fit text-4xl font-medium tracking-tight transition-[opacity,transform] duration-500 motion-reduce:transition-none ${
-                  isMenuOpen
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0"
-                }`}
-                style={{
-                  transitionDelay: isMenuOpen ? `${200 + index * 90}ms` : "0ms",
-                }}
+                className="relative text-brand"
+                aria-label={`Shporta me ${totalItems} produkte`}
               >
-                {link.label}
+                <ShoppingBag size={20} />
+                {totalItems > 0 && (
+                  <span className="absolute -right-3 -top-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand px-1 text-xs text-white">
+                    {totalItems}
+                  </span>
+                )}
               </NavLink>
-            ))}
+            </div>
           </Container>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </header>
+    </>
   );
 };
 
