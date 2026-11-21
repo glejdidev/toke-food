@@ -19,9 +19,9 @@ const Button = ({
   const variantClasses =
     variant === "primary"
       ? "bg-brand text-white rounded-full px-8 py-4 hover:bg-brand-hover"
-      : "border-b text-brand border-brand pb-1 hover:text-sage";
+      : "border-b text-brand border-brand  hover:text-sage";
   return (
-    <Link to={to} className={`${baseClasses} ${variantClasses} ${className} mt-3 md:mt-6`}>
+    <Link to={to} className={`${baseClasses} ${variantClasses} ${className}`}>
       {children}
       <span
         className="transition-transform duration-300 group-hover:translate-x-1 "

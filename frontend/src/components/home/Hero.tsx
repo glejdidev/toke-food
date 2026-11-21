@@ -23,7 +23,7 @@ const Hero = () => {
             Trahana pa gluten, e frymëzuar nga tradita dhe e krijuar me përbërës
             të përzgjedhur. Për momente të ngrohta, çdo ditë.
           </p>
-          <div className="flex flex-wrap items-center gap-6">
+          <div className="flex flex-wrap items-center gap-6 mt-3 md:mt-4">
             <Button to="/products" variant="primary">
               Zbulo Produktet
             </Button>
@@ -31,7 +31,7 @@ const Hero = () => {
               Historia Jone
             </Button>
           </div>
-          <div className="flex items-center gap-2 my-4 md:mt-12">
+          <div className="flex items-center gap-2 my-4 mt-8 md:mt-12">
             <span className="w-9 h-9 rounded-full bg-sage/20 flex items-center justify-center">
               <Leaf size={20} className="text-brand/50" />
             </span>
@@ -41,16 +41,16 @@ const Hero = () => {
           </div>
         </div>
         {/* Right Side Hero Section */}
-        <div className="relative w-full max-w-[560px] mx-auto">
+        <div className="relative w-full max-w-140 mx-auto">
           <div className="rounded-[58%_42%_55%_45%/45%_55%_45%_55%] w-full aspect-square bg-[#dfead8]">
             <img
               src={heroImage}
               className="rounded-full object-cover w-[82%] h-[82%] top-[9%] left-[9%] absolute z-10"
             />
           </div>
-          <div className="absolute z-20 rounded-full aspect-square top-[10%] right-[0%] w-[22%] flex items-center justify-center items-center gap-2 bg-[#d9f2a0]">
-            <Sun size={28} className="text-brand" />
-            <div className="font-heading font-extrabold leading-none text-brand rotate-12">
+          <div className="absolute z-20 rounded-full aspect-square top-[10%] right-[0%] w-[20%] md:w-[22%]  flex  justify-center items-center gap-1 md:gap-2 bg-[#d9f2a0]">
+            <Sun size={20} className="text-brand md:w-7 md:h-7 shrink-0" />
+            <div className="font-heading font-extrabold leading-none text-brand text-[11px] md:text-[13px]">
               <span className="block">GOOD</span>
               <span className="block">FOOD</span>
               <span className="block">MOOD</span>
