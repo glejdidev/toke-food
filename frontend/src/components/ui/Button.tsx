@@ -4,7 +4,7 @@ import { ArrowUpRight, ArrowRight } from "lucide-react";
 type ButtonProps = {
   children: ReactNode;
   to: string;
-  variant?: "primary" | "text";
+  variant?: "primary" | "text" | "lime";
   className?: string;
 };
 
